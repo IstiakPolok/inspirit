@@ -1,8 +1,8 @@
 class AppUrl {
   static const String _baseUrl =
-      'http://10.10.13.61:8001';
+      'https://patronage-esquire-everyday.ngrok-free.dev/api';
   static const String _webSocketUrl =
-      'wss://noncircuitous-lauryn-pseudosocialistic.ngrok-free.dev/users';
+      'wss://patronage-esquire-everyday.ngrok-free.dev/users';
   static const String loginUrl = '$_baseUrl/users/login/';
   static const String refreshUrl = '$_baseUrl/users/token/refresh/';
   static const String setPassword = '$_baseUrl/users/password/reset/';
@@ -36,12 +36,6 @@ class AppUrl {
   static const String messagesUrl = '$_webSocketUrl/chat';
   static const String treeUrl = '$_baseUrl/family-tree/';
   static const String condolenceUrl = '$_baseUrl/condolences/';
-
-
-
-
-
-
 
   static const String fetchProfilesUrl = '$_baseUrl/user/profiles/';
   static const String profilesFilterUrl = '$_baseUrl/profiles/filter/';

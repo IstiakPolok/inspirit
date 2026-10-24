@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../res/assets/image_assets.dart';
 import '../../../../res/colors/app_color.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../home/views/navbar.dart';
 import '../controllers/auth_controller.dart';
 
 class PlanView extends GetView<AuthController> {
@@ -282,7 +283,22 @@ class PlanView extends GetView<AuthController> {
                   },
                   title: 'NEXT',
                 ),
-                SizedBox(height: 15.h),
+                SizedBox(height: 8.h),
+                TextButton(
+                  onPressed: () {
+                    Get.offAll(() => Navigation());
+                  },
+                  child: Text(
+                    'Skip for now',
+                    style: TextStyle(
+                      color: AppColor.textGreyColor2,
+                      fontSize: 14.sp,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
               ],
             ),
           ),

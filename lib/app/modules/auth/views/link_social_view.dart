@@ -138,7 +138,7 @@ class LinkSocialView extends GetView<AuthController> {
               ),
               CustomButton(
                 onPress: () async {
-                  Get.to(PlanView(), transition: Transition.noTransition);
+                  Get.to(() => const PlanView(), transition: Transition.noTransition);
                 },
                 title: 'Next',
                 height: 48,

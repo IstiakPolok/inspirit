@@ -126,7 +126,7 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging get messaging => FirebaseMessaging.instance;
 
   static Future<void> initialize() async {
     await requestNotificationPermission();
@@ -134,8 +134,16 @@ class NotificationService {
     const AndroidInitializationSettings androidSettings =
     AndroidInitializationSettings('@mipmap/ic_launcher');
 
+    const DarwinInitializationSettings iosSettings =
+    DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
     final InitializationSettings settings = InitializationSettings(
       android: androidSettings,
+      iOS: iosSettings,
     );
 
     await _notificationsPlugin.initialize(
@@ -162,8 +170,7 @@ class NotificationService {
     } else if (status.isDenied) {
       debugPrint('Notification permission denied.');
     } else if (status.isPermanentlyDenied) {
-      debugPrint('Notification permission permanently denied. Open settings.');
-      openAppSettings();
+      debugPrint('Notification permission permanently denied.');
     }
   }
 
@@ -196,8 +203,16 @@ class NotificationService {
       playSound: true,
     );
 
+    const DarwinNotificationDetails iosDetails =
+    DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,
+      iOS: iosDetails,
     );
 
     // Show notification in system tray

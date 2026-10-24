@@ -2051,13 +2051,13 @@ class ApiService extends GetxService {
   Future<Map<String, dynamic>> updateUserProfile(
     String username,
     String name,
-    File imagePaths,
+    File? imagePaths,
     String? token,
   ) async {
     final url = Uri.parse(AppUrl.updateProfileUrl);
     debugPrint('username:____________$username _______________');
     debugPrint('name:____________$name _______________');
-    debugPrint('imgae:____________$imagePaths _______________');
+    debugPrint('image:____________$imagePaths _______________');
     debugPrint('token:____________$token _______________');
     try {
       final multipartRequest = http.MultipartRequest('PUT', url);
@@ -2067,17 +2067,19 @@ class ApiService extends GetxService {
       });
       multipartRequest.fields['username'] = username;
       multipartRequest.fields['name'] = name;
-      // Handle file upload (profile photo)
-      var mimeType =
-          lookupMimeType(imagePaths.path) ??
-          'application/octet-stream'; // Ensure mime type is defined
-      var photoFile = await http.MultipartFile.fromPath(
-        'profile_photo', // The name of the field in the backend
-        imagePaths.path,
-        contentType: MediaType.parse(mimeType),
-      );
-      // Add photo file to the request
-      multipartRequest.files.add(photoFile);
+      // Handle file upload (profile photo) if selected
+      if (imagePaths != null && imagePaths.path.isNotEmpty) {
+        var mimeType =
+            lookupMimeType(imagePaths.path) ??
+            'application/octet-stream'; // Ensure mime type is defined
+        var photoFile = await http.MultipartFile.fromPath(
+          'profile_photo', // The name of the field in the backend
+          imagePaths.path,
+          contentType: MediaType.parse(mimeType),
+        );
+        // Add photo file to the request
+        multipartRequest.files.add(photoFile);
+      }
       final streamedResponse = await multipartRequest.send();
       final response = await http.Response.fromStream(streamedResponse);
       debugPrint('Response status: ${response.statusCode}');

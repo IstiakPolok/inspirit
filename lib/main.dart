@@ -12,6 +12,7 @@ import 'app/modules/onboarding/controllers/onboarding_controller.dart';
 import 'app/modules/profile/controllers/family_tree_controller.dart';
 import 'app/modules/profile/controllers/profile_controller.dart';
 import 'app/routes/app_pages.dart';
+import 'firebase_options.dart';
 import 'res/colors/app_color.dart';
 import 'res/components/api_service.dart';
 import 'res/components/notification_service.dart';
@@ -19,42 +20,46 @@ import 'res/components/notification_service.dart';
 Future<void> main() async {
   // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await NotificationService.initialize();
-  await Firebase.initializeApp();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Register dependencies
   Get.put(ApiService());
   Get.put(AuthController());
   Get.put(OnboardingController());
-  Get.put(ChatController());
-  Get.put(ProfileController());
-  Get.put(PostController());
-  Get.put(ExploreController());
-  Get.put(MemoryController());
-  Get.put(FamilyTreeController());
+  Get.lazyPut(() => ChatController(), fenix: true);
+  Get.lazyPut(() => ProfileController(), fenix: true);
+  Get.lazyPut(() => PostController(), fenix: true);
+  Get.lazyPut(() => ExploreController(), fenix: true);
+  Get.lazyPut(() => MemoryController(), fenix: true);
+  Get.lazyPut(() => FamilyTreeController(), fenix: true);
   runApp(
     ScreenUtilInit(
       designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return GestureDetector(
-          onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Jordyn",
+          initialRoute: AppPages.initial,
+          getPages: AppPages.routes,
+          builder: (context, widget) {
+            return GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: widget,
+            );
           },
-          child: GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: "Jordyn",
-            initialRoute: AppPages.initial,
-            getPages: AppPages.routes,
-            theme: ThemeData(
-              scaffoldBackgroundColor: AppColor.backgroundColor,
-              appBarTheme: const AppBarTheme(
-                elevation: 0,
-                backgroundColor: AppColor.backgroundColor,
-                scrolledUnderElevation: 0,
-              ),
+          theme: ThemeData(
+            scaffoldBackgroundColor: AppColor.backgroundColor,
+            appBarTheme: const AppBarTheme(
+              elevation: 0,
+              backgroundColor: AppColor.backgroundColor,
+              scrolledUnderElevation: 0,
             ),
           ),
         );

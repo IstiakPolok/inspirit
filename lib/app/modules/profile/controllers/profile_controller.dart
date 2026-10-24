@@ -10,6 +10,7 @@ import '../../../../res/components/api_service.dart';
 import '../../../../widgets/dialogue.dart';
 import '../../../../widgets/show_custom_snack_bar.dart';
 import '../../auth/controllers/auth_controller.dart';
+import '../../auth/controllers/authcameracontroller.dart';
 import '../../auth/views/link_social_view.dart';
 import '../../explore/models/friend.dart';
 import '../../explore/models/user_model.dart';
@@ -472,10 +473,22 @@ class ProfileController extends GetxController {
   Future<void> updateProfile() async {
     final String username = userNameController.value.text.trim();
     final String name = nameController.value.text.trim();
-    final File profilePhoto = pickedImage.value!;
+    final File? profilePhoto = pickedImage.value ??
+        (Get.isRegistered<AuthBottomSheetController>()
+            ? Get.find<AuthBottomSheetController>().pickedImage.value
+            : null);
     final String token = authController.accessToken.value;
     final String refreshToken = authController.refreshToken.value;
     debugPrint('Updating profile with token: $token');
+
+    if (name.isEmpty) {
+      _setError('Please enter your name.');
+      return;
+    }
+    if (username.isEmpty) {
+      _setError('Please create your user name.');
+      return;
+    }
 
     try {
       _setLoading(true);
