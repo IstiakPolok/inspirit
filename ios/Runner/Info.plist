@@ -26,8 +26,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs camera access to take pictures or videos.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -35,6 +33,14 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to take pictures or videos for posts and profile pictures.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to select photos and videos for your profile and posts.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires access to your location while using the app to show relevant events and nearby posts.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires access to your location to provide location-based services, events, and community updates.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This app requires access to local network to communicate with backend servers.</string>
 	<key>UIApplicationSceneManifest</key>

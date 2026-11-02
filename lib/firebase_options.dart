@@ -62,6 +62,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '303811596371',
     projectId: 'jordyn-54224',
     storageBucket: 'jordyn-54224.firebasestorage.app',
-    iosBundleId: 'insprit.com.jordyn',
+    iosBundleId: 'com.inspiritmemora.inspirit',
   );
 }
